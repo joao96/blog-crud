@@ -1,0 +1,37 @@
+manage all of our state inside one single location
+centralize all of our data inside the very root component
+
+
+BLOG POST PROVIDER (parent)
+  React Navigation Stack Navigator (child)
+    IndexScreen (child child)
+    ShowScreen (child child)
+    CreateScreen (child child)
+    EditScreen (child child)
+
+Props
+  Communicates information from a parent directly down to a child
+  Easy to setup
+  To communicate data down multiple layers, we have to write a lot of code (prohibitive)
+
+Context (just about moving information across the application)
+  moves information from a parent to some nested child
+  complicated to setup, lots of special terms
+  easy to communicate data from a parent to a super nested child
+
+
+we have to create a separate function for each operation we's want to take on a blog. (add, edit, delete)
+Many functions!
+
+Rather than the 'useState' hook, maybe try out 'useReducer' instead??
+
+CREATE                       EDIT
+
+onSubmit                    onSubmit
+Initial Form Values         Initial Form Values         
+Labels?                     Labels?
+\                               /
+  \                           /
+    \                       /
+      \                   /
+         | BLOGPOSTFORM |
