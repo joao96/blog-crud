@@ -1,5 +1,5 @@
 // useContext: is a function that says "look at some Context object and give us access to that things value prop"
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 
 import {
   View,
@@ -16,7 +16,23 @@ import { Feather } from "@expo/vector-icons";
 
 const IndexScreen = ({ navigation }) => {
   // retrieves the value prop from the parent component (BlogContext)
-  const { state, deleteBlogPost } = useContext(BlogContext);
+  const { state, deleteBlogPost, getBlogPosts } = useContext(BlogContext);
+
+  // is used to make sure that we only run some bit of code one time when a component is first rendered
+  useEffect(() => {
+    // is called anytime that we first navigate to this screen
+    // also, is called anytime that the screen "appears" back from other screen
+    getBlogPosts();
+    // Focus -> the primary screen on the device (so, the IndexScreen gets displayed)
+    const listener = navigation.addListener("didFocus", () => {
+      getBlogPosts();
+    });
+
+    return () => {
+      // as soon as IndexScreen is no longer visible, then go ahead and clean it up
+      listener.remove();
+    };
+  }, []);
 
   return (
     <View>

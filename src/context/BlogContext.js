@@ -1,5 +1,5 @@
 import createDataContext from "./createDataContext";
-
+import jsonServer from "../api/jsonServer";
 // const App = () => {
 //  return <CustomComponent>
 //    <Text>Hi there!</Text>
@@ -14,15 +14,9 @@ import createDataContext from "./createDataContext";
 
 const blogReducer = (state, action) => {
   switch (action.type) {
-    case "add_blogpost":
-      return [
-        ...state,
-        {
-          id: Math.floor(Math.random() * 99999),
-          title: action.payload.title,
-          content: action.payload.content
-        }
-      ];
+    case "get_blogposts":
+      return action.payload;
+
     case "delete_blogpost":
       return state.filter(blogPost => blogPost.id !== action.payload);
 
@@ -36,28 +30,44 @@ const blogReducer = (state, action) => {
   }
 };
 
+const getBlogPosts = dispatch => {
+  return async () => {
+    // any route will be concatenated with the baseURL in jsonserver
+    const response = await jsonServer.get("/blogposts");
+    // response.data === [{}, {}, {}]
+    dispatch({ type: "get_blogposts", payload: response.data });
+  };
+};
+
 const addBlogPost = dispatch => {
-  return (title, content, callback) => {
-    dispatch({ type: "add_blogpost", payload: { title, content } });
+  return async (title, content, callback) => {
+    await jsonServer.post("/blogposts", { title, content });
     if (callback) callback();
   };
 };
 
 const deleteBlogPost = dispatch => {
-  return id => {
+  return async id => {
+    // delete on the server side
+    await jsonServer.delete(`/blogposts/${id}`);
+    // delete from the client side (local)
     dispatch({ type: "delete_blogpost", payload: id });
   };
 };
 
 const editBlogPost = dispatch => {
-  return (id, title, content, callback) => {
+  return async (id, title, content, callback) => {
+    // server side
+    await jsonServer.put(`/blogposts/${id}`, { title, content });
+    // client side
     dispatch({ type: "edit_blogpost", payload: { id, title, content } });
     if (callback) callback();
   };
 };
 
-export const { Context, Provider } = createDataContext(
-  blogReducer,
-  { addBlogPost, deleteBlogPost, editBlogPost },
-  [{ title: "TEST POST", content: "TEST CONTENT", id: 1 }]
-);
+export const { Context, Provider } = createDataContext(blogReducer, {
+  addBlogPost,
+  deleteBlogPost,
+  editBlogPost,
+  getBlogPosts
+});
