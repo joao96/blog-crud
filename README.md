@@ -8,7 +8,45 @@ In order to run this app you should follow these steps:
 
 **Step 1:** Clone this repository and change into the project folder **Blog-CRUD**.
 
-**Step 2:** In your terminal, run as below:
+**Step 2:** Outside of **Blog-CRUD** (same tree level as the project folder), create a new folder called **jsonserver**:
+
+```
+mkdir jsonserver
+```
+Then:
+```
+cd jsonserver
+```
+
+Inside this newly create folder run the following commands:
+
+```
+npm init
+```
+
+And:
+
+```
+npm install json-server ngrok
+```
+
+As soon as you finish running the previous command, everything related to the server configuration will be set.
+
+Now open a terminal window and run:
+
+```
+npm run db
+```
+
+After that, open a second window and enter:
+
+```
+npm run tunnel
+```
+
+Here you'll see, if everything went accordingly, two ***Forwarding*** urls. Copy the first one and change into the **Blog-CRUD** folder. Then, go to the file jsonServer.js located in ./src/api. Change the baseURL variable to the one you copied.  
+
+**Step 3:** Inside the **Blog-CRUD** folder, in your terminal, run as below:
 
 ```
 npm install
