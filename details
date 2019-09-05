@@ -2,7 +2,7 @@ manage all of our state inside one single location
 centralize all of our data inside the very root component
 
 
-BLOG POST PROVIDER (parent)
+BLOG POST PROVIDER (parent) -> made "data" available to every single component that wanted to get access to it 
   React Navigation Stack Navigator (child)
     IndexScreen (child child)
     ShowScreen (child child)
@@ -14,7 +14,7 @@ Props
   Easy to setup
   To communicate data down multiple layers, we have to write a lot of code (prohibitive)
 
-Context (just about moving information across the application)
+Context (just about moving information across the  entire application)
   moves information from a parent to some nested child
   complicated to setup, lots of special terms
   easy to communicate data from a parent to a super nested child
@@ -35,3 +35,30 @@ Labels?                     Labels?
     \                       /
       \                   /
          | BLOGPOSTFORM |
+
+
+Store our list of posts on some outside API server.
+So anytime someone creates a blog post we're going to make a network request to this outside server
+and try to store a new blog post over there.
+And we'll also have the ability to fetch a list of all of our different blog posts and maybe edit and
+delete them as well. (JSON Server)
+
+npm install axios
+
+METHOD            ROUTE             RESULT
+GET             /blogposts          retrieve all stored blog posts
+GET             /blogposts/{id}     get blog post with particular ID
+POST            /blogposts          create a new blog post
+PUT             /blogposts/{id}     update blog post with given ID
+DELETE          /blogposts{id}      delete blog post with given ID
+
+{FLOW
+
+- IndexScreen gets displayed by React Navigation
+- IndexScreen needs to call a fucntion that will make a request to the JSON server to the current list of posts
+- IndexScreen receives list of current blog posts (probably empty!)
+
+Time passes...
+
+- request complete! list of blog posts gets stored through our 'useRecuder' hook
+- state changed! rerender whole app. IndexScreen gets new list of posts}
