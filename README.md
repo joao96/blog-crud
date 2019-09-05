@@ -46,7 +46,7 @@ npm run tunnel
 
 Here you'll see, if everything went accordingly, two ***Forwarding*** urls. Copy the first one and change into the **Blog-CRUD** folder. Then, go to the file jsonServer.js located in ./src/api. Change the baseURL variable to the one you copied.  
 
-Notice that the server session expires every 8 hours. So everytime it does (or gets restarted), you'll need to change the baseURL variable with the provided ***Forwarding** url.
+Notice that the server session expires every 8 hours. So everytime it does (or gets restarted), you'll need to change the baseURL variable with the provided ***Forwarding*** url.
 
 **Step 3:** Inside the **Blog-CRUD** folder, in your terminal, run as below:
 
